@@ -1,0 +1,11 @@
+<button
+    [disabled]="isDisabled"
+    [class.bg-gray-500]="isDisabled"
+    [type]="isSubmit ? 'submit' : 'button'" class="border border-white rounded bg-amber-400 text-slate-900 p-2"
+        [ngClass]="{
+            principal: isPrincipal,
+            secondaire: isSecondary,        
+        }" 
+    (click)="clicked()">
+   {{btnText}}
+</button>

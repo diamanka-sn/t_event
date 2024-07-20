@@ -1,0 +1,21 @@
+<ng-container>
+  <div class="relative ml-auto" (click)="toggleDropdown2()">
+    <div class="flex items-center space-x-2 cursor-pointer relative">
+                <span class="text-amber-400">
+                  <i class="pi pi-bell text-xl cursor-pointer" pBadge></i>
+                  <span class="absolute top-0 right-0 mt-[-0.5rem] mr-[-0.5rem] flex items-center justify-center bg-amber-400 h-4 w-4 rounded-full text-xs text-slate-900">
+                    {{ notifications.length }}
+                  </span>
+                </span>
+    </div>
+
+    <div *ngIf="dropdownOpen2" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+      <ul class="p-2">
+        <li *ngFor="let notification of notifications" class="p-2 border-b border-gray-200 last:border-none hover:bg-amber-400 cursor-pointer" >
+          <div class="text-sm font-medium text-gray-900" (click)="openNotification(notification)">{{ notification.title }}</div>
+          <div class="text-xs text-gray-500">{{ notification.time | date: 'short' }}</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</ng-container>

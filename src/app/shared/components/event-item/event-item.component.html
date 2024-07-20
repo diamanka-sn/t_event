@@ -1,0 +1,33 @@
+<div class="border p-2 rounded-lg shadow-sm bg-white flex">
+    <div class="w-1/5 p-0">
+        <img class="w-full h-28 rounded object-cover" [src]="event.images[0]" alt="Image">
+    </div>
+    
+    <div class="w-4/5 pl-2">
+        <div class="flex items-center justify-between">
+            <div>
+                <h5 class="text-xs font-mono font-bold"><a class="cursor-pointer" (click)="details(event.slug)">{{ event.title }}</a></h5>
+            </div>
+            <img class="rounded-full w-6 h-6" src="{{event.user?.imageUrl}}" alt="Image">
+        </div>
+        <p class="mt-2 text-xs text-gray-600">{{ event.content }}.</p>
+        <div class="flex justify-between mt-4">
+            <div class="flex items-center">
+                <span class="pi pi-map-marker mr-2"></span>
+                <p class="text-xs text-gray-600">{{ event.location }}</p>
+            </div>
+            <div class="flex items-center">
+                <span class="pi pi-calendar mr-2"></span>
+                <p class="text-xs text-gray-600">{{ event.date | date:'dd-MM-YYYY HH:mm' }}</p>
+            </div>
+            <div class="flex items-center" *ngIf="!isOrganizer">
+                <span class="pi pi-credit-card mr-2"></span>
+                <p class="text-xs text-gray-600">{{ event.isFree ? "Gratuit" : "Payant" }}</p>
+            </div>
+            <div class="flex items-center">
+                <span class="pi pi-users mr-2"></span>
+                <p class="text-xs text-gray-600">{{event.userEvents.length}}</p>
+            </div>
+        </div>
+    </div>
+</div>

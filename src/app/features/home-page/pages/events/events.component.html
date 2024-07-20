@@ -1,0 +1,33 @@
+<div class="mx-auto">
+    <div class="flex flex-wrap">
+        <div class="w-full md:w-2/3 px-4">
+            <div class="relative mt-4 md:w-1/3">
+                <app-recherche [placeholderMessage]="placeholderMessage" (searched)="search($event)"></app-recherche>
+            </div>
+
+        </div>
+    </div>
+    <div class="container mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            
+        </div>
+    </div>
+    
+    <div  *ngIf="events$ | async as events">
+        <div class="flex flex-wrap mt-6" *ngIf="events.length > 0; else noEvents">
+            <app-event-item class="w-full md:w-1/3 px-4 mb-4" *ngFor="let _event of events" (detailsClicked)="details(_event)"  [isOrganizer]="true" [event]="_event"></app-event-item>
+            <mat-paginator class="w-full" [length]="totalEvents" [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPageChange($event)"
+            (pageSizeChange)="onPageSizeChange($event)">
+        </mat-paginator>
+        </div>
+        <ng-template #noEvents>
+            <div class="flex flex-wrap mt-4">
+                <p class="w-full  px-1 mb-4">Aucun événements planifié</p>
+            </div>
+        </ng-template>
+    </div>
+</div>
+
+
+<p-toast />

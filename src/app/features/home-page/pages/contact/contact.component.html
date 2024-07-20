@@ -1,0 +1,46 @@
+<div class="container w-1/2 mx-auto content-center">
+    <div class="bg-white p-6 rounded-lg w-full">
+        <h2 class="text-2xl font-bold mb-4">Nous contacter</h2>
+        <form class="space-y-4">
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Nom complet</label>
+                <input type="text" id="name"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-400 focus:border-amber-400"
+                    placeholder="Prénom nom">
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Adresse email</label>
+                <input type="email" id="email"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-400 focus:border-amber-400"
+                    placeholder="exemple@exemple.com">
+            </div>
+            <div>
+                <label for="subject" class="block text-sm font-medium text-gray-700">Objet</label>
+                <input type="text" id="subject"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-400 focus:border-amber-400"
+                    placeholder="Objet du message">
+            </div>
+            <div>
+                <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                <textarea id="message" rows="4"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-400 focus:border-amber-400"
+                    placeholder="Votre message"></textarea>
+            </div>
+            <div class="flex items-start">
+                <div class="flex items-center h-5">
+                    <input id="accept-terms" type="checkbox"
+                        class="focus:ring-amber-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                </div>
+                <div class="ml-3 text-sm">
+                    <label for="accept-terms" class="font-medium text-gray-700">J'accepte les termes</label>
+                </div>
+            </div>
+            <div>
+                <button type="submit"
+                    class="w-full bg-amber-400 text-black p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2">Send
+                    Message</button>
+            </div>
+        </form>
+    </div>
+
+</div>

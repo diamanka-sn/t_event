@@ -1,0 +1,66 @@
+<div class="p-6">
+    <h5 class="text-xl font-semibold mb-3 text-center">I N S C R I P T I O N</h5>
+    <form class="example-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <mat-form-field class="w-full">
+            <mat-label>Prénom</mat-label>
+            <input matInput type="text" id="firstname" formControlName="firstname">
+            <mat-error *ngIf="firstname.invalid && firstname.touched">
+                Le prénom est requis.
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-full">
+            <mat-label>Nom</mat-label>
+            <input matInput type="text" id="lastname" formControlName="lastname">
+            <mat-error *ngIf="lastname.invalid && lastname.touched">
+                Le nom est requis.
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>E-mail</mat-label>
+            <input matInput type="email" formControlName="email" id="email">
+            <mat-error *ngIf="email.invalid && email.touched">
+                <span *ngIf="phone.errors?.['required']">Adresse email est obligatoire.</span>
+                <span *ngIf="phone.errors?.['email']">Adresse email invalide.</span>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>Téléphone</mat-label>
+            <input matInput type="number" id="phone" formControlName="phone">
+            <mat-error *ngIf="phone.invalid && phone.touched">
+                <span *ngIf="phone.errors?.['required']">Le téléphone est obligatoire.</span>
+                <span *ngIf="phone.errors?.['pattern']">Le téléphone doit commencer par 77, 78, 70, 75 ou 76 et être suivi de 7 chiffres.</span>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-full">
+            <mat-label>Mot de passe</mat-label>
+            <input matInput type="password" id="password" formControlName="password">
+                <mat-error *ngIf="password.invalid && password.touched">
+                    <span *ngIf="password.errors?.['required']">Le mot de passe est requis.</span>
+                    <span *ngIf="password.errors?.['minlength']">Le mot de passe doit contenir au moins 8 caractères.</span>
+                    <span *ngIf="password.errors?.['pattern']">Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule et un chiffre.</span>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-full">
+            <mat-label>Confirmer mot de passe</mat-label>
+            <input matInput type="password" id="confirmPassword" formControlName="confirmPassword">
+            <mat-error *ngIf="confirmPassword.invalid && confirmPassword.touched">
+                Les mots de passe doivent correspondre.
+            </mat-error>
+        </mat-form-field>
+        <label>Etes-vous un organisateur ?</label>
+        <mat-radio-group formControlName="isOrganizer">
+            <mat-radio-button value="1">OUI</mat-radio-button>
+            <mat-radio-button value="0">NON</mat-radio-button>
+        </mat-radio-group>
+        <mat-checkbox formControlName="acceptTerms">
+            J'accepte les conditions et politiques d'utilisations
+        </mat-checkbox>
+        <mat-error *ngIf="acceptTerms.invalid && acceptTerms.touched">
+            Vous devez accepter les conditions d'utilisation.
+        </mat-error>
+
+        <button type="submit" class="w-full bg-yellow-500 text-black p-3 rounded-md">
+            Inscription
+        </button>
+    </form>
+</div>

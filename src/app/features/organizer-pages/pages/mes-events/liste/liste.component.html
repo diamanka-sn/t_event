@@ -1,0 +1,28 @@
+<p-toast />
+<div class="flex flex-wrap">
+    <div class="w-full">
+        <div class="relative mt-2 md:w-1/3">
+            <button class="flex items-center px-3 py-2 bg-amber-400 text-white rounded-md cursor-pointer"
+                (click)="open()">
+                <i class="pi pi-plus mr-2"></i>
+                Nouveau
+            </button>
+        </div>
+    </div>
+    <div *ngIf="events$ | async as events">
+        <div class="flex flex-wrap mt-4" *ngIf="events.length > 0; else noEvents">
+            <app-event-item class="w-full md:w-1/3 px-1 mb-4"  (detailsClicked)="details(_event.slug)"  [isOrganizer]="userInfo?.isOrganizer"
+                *ngFor="let _event of events" [event]="_event"></app-event-item>
+
+            <mat-paginator class="w-full" [length]="totalEvents" [pageSize]="pageSize"
+                [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPageChange($event)"
+                (pageSizeChange)="onPageSizeChange($event)">
+            </mat-paginator>
+        </div>
+        <ng-template #noEvents>
+            <div class="flex flex-wrap mt-4">
+                <p class="w-full  px-1 mb-4">Vous n'avez pas d'événements pour le moment.</p>
+            </div>
+        </ng-template>
+    </div>
+</div>

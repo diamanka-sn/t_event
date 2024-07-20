@@ -1,0 +1,54 @@
+<div class="container w-full">
+  <div class="p-2 bg-white text-slate-950 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <img src="../../../../assets/img/logo.png" width="150">
+    </div>
+    <div class="flex items-center space-x-2">
+      <a routerLink="" routerLinkActive="text-amber-500"
+        class="text-slate-900 hover:text-amber-500 cursor-pointer">Accueil</a>
+      <a routerLink="event" routerLinkActive="text-amber-500"
+        class="text-slate-900 hover:text-amber-500 cursor-pointer">Évènements</a>
+
+
+
+      <ng-container *ngIf="isLoggedIn; else notLoggedIn">
+
+        <a routerLink="chat" routerLinkActive="text-amber-500"
+          class="text-slate-900 hover:text-amber-500 cursor-pointer">Salon</a>
+        <app-notification></app-notification>
+        <div class="relative ml-auto" (click)="toggleDropdown()">
+          <div class="flex items-center space-x-2 cursor-pointer">
+            <span class="text-amber-400">{{userInfo?.firstname + " " + userInfo?.lastname}}</span>
+            <div class="rounded-full overflow-hidden h-8 w-8">
+              <img [src]="userInfo?.imageUrl ? userInfo.imageUrl : '../../../../assets/logo.jpg'" alt="Avatar"
+                class="w-8 h-8 rounded-full">
+            </div>
+          </div>
+          <div *ngIf="dropdownOpen"
+            class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+            <a routerLink="profil" routerLinkActive="text-amber-500"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+              *ngIf="!userInfo?.isOrganizer">Profil</a>
+            <a routerLinkActive="text-amber-500" routerLink="/my"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+              *ngIf="userInfo?.isOrganizer">Mon
+              espace</a>
+            <div class="border-t border-gray-200"></div>
+            <a (click)="logout()"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">Déconnexion</a>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #notLoggedIn>
+
+        <a routerLink="contact" routerLinkActive="text-amber-500"
+          class="text-slate-900 hover:text-amber-500 cursor-pointer">Contact</a>
+        <app-button-shared [btnText]="'Inscription'" (click)="register()"></app-button-shared>
+      </ng-template>
+    </div>
+
+  </div>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

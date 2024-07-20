@@ -1,0 +1,62 @@
+<div class="p-6">
+  <h5 class="text-xl mb-3 text-center">Création d'un nouveau événement</h5>
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="bg-white rounded-lg space-y-2">
+    <mat-form-field class="w-full">
+      <mat-label>Titre</mat-label>
+      <input matInput formControlName="title">
+      <mat-error *ngIf="title?.invalid && (title?.dirty || title?.touched)">
+        <small *ngIf="title?.errors?.['required']">Le titre est requis.</small>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="content"></textarea>
+      <mat-error *ngIf="content?.invalid && (content?.dirty || content?.touched)">
+        <small *ngIf="content?.errors?.['required']">La description est requise.</small>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Catégorie</mat-label>
+      <input matInput formControlName="category" list="categoryList">
+      <mat-error *ngIf="category?.invalid && (category?.dirty || category?.touched)">
+        <small *ngIf="category?.errors?.['required']">La catégorie est requise.</small>
+      </mat-error>
+      <datalist id="categoryList">
+        <option *ngFor="let category of categories$ | async" [value]="category.name"></option>
+      </datalist>
+    </mat-form-field>
+
+
+    <mat-form-field class="w-full">
+      <mat-label>Date et Heure</mat-label>
+      <input matInput type="datetime-local" formControlName="date">
+      <mat-error *ngIf="date?.invalid && (date?.dirty || date?.touched)">
+        <small *ngIf="date?.errors?.['required']">La date et l'heure sont requises.</small>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Nombre de place</mat-label>
+      <input matInput type="number" formControlName="place">
+      <mat-error *ngIf="place?.invalid && (place?.dirty || place?.touched)">
+        <small *ngIf="place?.errors?.['required']">Le nombre de place est obligatoire.</small>
+      </mat-error>
+    </mat-form-field>
+    <mat-checkbox formControlName="isFree">Gratuit</mat-checkbox>
+
+    <mat-form-field class="w-full">
+      <mat-label>Lieu</mat-label>
+      <input matInput formControlName="location">
+      <mat-error *ngIf="location?.invalid && (location?.dirty || location?.touched)">
+        <small *ngIf="location?.errors?.['required']">La localisation est obligatoire.</small>
+      </mat-error>
+    </mat-form-field>
+
+    <button type="submit"
+      class="w-full bg-amber-400 text-white p-3 rounded-md shadow-md hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-300"
+      [disabled]="eventForm.invalid">
+      Créer un événement
+    </button>
+  </form>
+</div>

@@ -1,0 +1,118 @@
+<div class="container mx-auto p-2">
+    <div class="flex flex-col md:flex-row md:space-x-4">
+        <div class="w-full md:w-1/3 bg-white rounded-lg shadow-lg p-4 relative">
+            <div class="relative">
+                <img [src]="userInfo?.imageUrl" alt="Profile Photo" class="w-full rounded-lg mb-4">
+                <button (click)="onChangeProfilePhoto()"
+                    class="absolute top-2 right-2 bg-slate-400 text-white px-2 py-1 text-sm rounded">Modifier ma photo
+                    de profil</button>
+                <input type="file" #fileInput class="hidden" (change)="onFileSelected($event)">
+                <div *ngIf="uploading" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <p-progressSpinner styleClass="w-10 h-10" strokeWidth="7"
+                        animationDuration=".5s"></p-progressSpinner>
+                </div>
+            </div>
+            <div class="text-center">
+                <p class="text-gray-600">Membre depuis {{userInfo?.createdAt | date:'dd/MM/yyyy'}}</p>
+            </div>
+        </div>
+        <div class="card flex justify-content-center">
+            <p-dialog header="Header" [(visible)]="visible" [modal]="true" [style]="{ width: '50rem' }">
+                <ng-template pTemplate="header">
+                    <div class="inline-flex align-items-center justify-content-center gap-2">
+                        <span class="font-bold white-space-nowrap">
+                            Choisir mes centres d'intérêt
+                        </span>
+                    </div>
+                </ng-template>
+                <div class="flex items-center gap-2 flex-wrap" *ngIf="categories$ | async as categories">
+                    <span *ngFor="let _c of categories" class="px-2 py-1 rounded cursor-pointer" [ngClass]="{
+                            'bg-gray-200 text-gray-800': !isSelected(_c.name),
+                            'bg-red-500 text-white': isSelected(_c.name)
+                          }" (click)="selectCategory(_c.name)" (keydown)="onKeyDown($event)" tabindex="0">
+                        {{_c.name}}
+                    </span>
+                </div>
+                <button class="mt-4 p-2 bg-amber-400 text-white rounded" (click)="submitSelections()">
+                    Enregistrer
+                </button>
+            </p-dialog>
+        </div>
+        <div class="w-full md:w-2/3 space-y-4">
+            <div class="bg-white rounded-lg shadow-lg p-4 relative">
+                <button class="absolute top-2 right-2 bg-amber-400 text-white px-2 py-1 rounded"
+                    (click)="showDialog()"><i class="pi pi-plus"></i></button>
+                <h3 class="text-lg font-semibold">Mes centres d'intérêt</h3>
+                <div class="flex space-x-2 mt-2" *ngIf="preferences.length>0; else noPreferences">
+                    <span class="bg-gray-200 text-gray-800 px-2 py-1 rounded"
+                        *ngFor="let _p of preferences">{{_p}}</span>
+                </div>
+                <ng-template #noPreferences>
+                    <div class="flex space-x-2 mt-2">
+                        <p class="w-full  px-1 mb-4">Vous n'avez pas enregistrer de centres d'intérêt.</p>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="card flex justify-content-center gap-2">
+                <p-toast />
+                <p-confirmDialog />
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-4 flex flex-col md:flex-row md:space-x-8">
+                <div class="w-full md:w-1/2">
+                    <h3 class="text-lg font-semibold">Mes informations personnelles</h3>
+                    <form class="space-y-2 mt-4" [formGroup]="profileForm" (ngSubmit)="onSubmit($event)">
+                        <div class="w-full">
+                            <input id="prenom" type="text" placeholder="Entrez votre prénom" formControlName="firstname"
+                                class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-400 focus:border-amber-400 sm:text-sm">
+                        </div>
+
+                        <div class="w-full">
+                            <input id="nom" type="text" placeholder="Entrez votre nom" formControlName="lastname"
+                                class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-400 focus:border-amber-400 sm:text-sm">
+                        </div>
+
+                        <div class="w-full">
+                            <input id="email" type="email" placeholder="Entrez votre email" formControlName="email"
+                                class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-400 focus:border-amber-400 sm:text-sm">
+                        </div>
+
+                        <div class="w-full">
+                            <input id="telephone" type="number" placeholder="Entrez votre email" formControlName="phone"
+                                class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-400 focus:border-amber-400 sm:text-sm">
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit"
+                                class="border border-white rounded bg-amber-400 text-slate-900 p-2">Modifier mes informations</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="hidden md:block border-l border-gray-300 mx-8"></div>
+
+                <div class="w-full md:w-1/2 mt-8 md:mt-0">
+                    <h3 class="text-lg font-semibold">Changer mon mot de passe</h3>
+                    <form class="space-y-2 mt-4">
+                        <div class="w-full">
+                            <input id="oldPassword" type="password" placeholder="Ancien mot de passe"
+                                class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-400 focus:border-amber-400 sm:text-sm">
+                        </div>
+
+                        <div class="w-full">
+                            <input id="newPassword" type="password" placeholder="Nouveau mot de passe"
+                                class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-400 focus:border-amber-400 sm:text-sm">
+                        </div>
+
+                        <div class="w-full">
+                            <input id="confirmPassword" type="password" placeholder="Confirmer mot de passe"
+                                class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-400 focus:border-amber-400 sm:text-sm">
+                        </div>
+                        <div class="text-center mt-4">
+                            <app-button-shared type="submit" [btnText]="'Changer le mot de passe'"></app-button-shared>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

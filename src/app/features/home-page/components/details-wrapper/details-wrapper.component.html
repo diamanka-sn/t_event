@@ -1,0 +1,57 @@
+<p-galleria class="w-full" [value]="event.images" [numVisible]="5" [(activeIndex)]="activeIndex">
+    <ng-template pTemplate="item" let-item>
+        <img [src]="item" style="width: 100%;" />
+    </ng-template>
+    <ng-template pTemplate="thumbnail" let-item>
+        <div class="grid grid-nogutter justify-content-center">
+            <img [src]="item" style="width: 20%;" />
+        </div>
+    </ng-template>
+</p-galleria>
+<div class="container mx-auto p-4">
+    <p-toast />
+    <div class="mb-2">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-sm"><i class="pi pi-calendar mr-2"></i>{{event?.date | date:'dd/MM/YYYY HH:mm'}}</p>
+                <p class="text-sm"><i class="pi pi-map-marker mr-2"></i>{{event?.location}}</p>
+                <h1 class="text-3xl font-bold mt-1">{{event?.title}}</h1>
+                <p class="text-sm">{{event?.content}}</p>
+            </div>
+            <div *ngIf="inscrit; else nonInscrit">
+                <button class="bg-amber-400 text-white px-5 py-2 mt-2 rounded-lg"> Déjà inscrit <i
+                        class="pi pi-check"></i></button>
+            </div>
+
+            <ng-template #nonInscrit>
+                <button class="bg-amber-400 text-white px-5 py-2 mt-2 rounded-lg" (click)="inscrire()"> <svg
+                        *ngIf="loading" class="animate-spin h-5 w-5 mr-2 text-gray-600"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z">
+                        </path>
+                    </svg>
+                    <span *ngIf="!loading">Je m'inscris</span></button>
+            </ng-template>
+        </div>
+        <div class="bg-white p-4 flex items-center space-x-4 max-w-md mr-2">
+            <img [src]="event?.user?.imageUrl" alt="Avatar" class="w-12 h-12 rounded-full">
+            <div class="flex-grow">
+                <p class="text-sm">{{event?.user?.firstname +" "+ event?.user?.lastname}}</p>
+            </div>
+        </div>
+
+    </div>
+    <div class="bg-white p-6 rounded mt-3">
+        <p class="font-bold text-gray-700">Partage</p>
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-amber-400">https://www.terangaevent.sn/{{event?.slug}}</p>
+            </div>
+            <button class="text-amber-400">Copie le lien</button>
+        </div>
+    </div>
+</div>
+
+<p-toast />

@@ -1,0 +1,57 @@
+<div class="mx-auto">
+    <div class="flex flex-wrap">
+        <div class="w-full md:w-2/3 px-4">
+            <h1 class="text-4xl font-bold">Bienvenue {{isLoggedIn ? userInfo?.firstname :''}} <span
+                    class="wave">👋</span></h1>
+            <h2 class="text-2xl mt-2">sur <span class="text-yellow-500">Teranga events</span></h2>
+            <p class="mt-4 text-gray-700 font-sans">
+                Votre plateforme de gestion d'évènements. Organiser un évènement peut être une expérience
+                enrichissante,
+                mais cela peut aussi être stressant. Avec notre solution intuitive et complète, nous rendons la
+                gestion
+                d'évènements aussi simple que possible, vous permettant de vous concentrer sur ce qui compte
+                vraiment :
+                offrir une expérience mémorable à vos participants.
+            </p>
+            <div class="relative mt-4 md:w-1/2">
+                <app-recherche [placeholderMessage]="placeholderMessage" (searched)="search($event)"></app-recherche>
+            </div>
+            <div *ngIf="events$ | async as events; else loading">
+                <div class="flex flex-wrap mt-4" *ngIf="events.length > 0; else noEvents">
+                    <app-event-item class="w-full md:w-1/2 px-1 mb-4" [isOrganizer]="false"
+                        *ngFor="let _event of events" [event]="_event" (detailsClicked)="details(_event)"></app-event-item>
+                </div>
+                <ng-template #noEvents>
+                    <div class="flex flex-wrap mt-4">
+                        <p class="w-full  px-1 mb-4">Pas d'événements pour le moment.</p>
+                    </div>
+                </ng-template>
+            </div>
+            <ng-template #loading>
+                <div class="flex justify-center mt-4">
+                    <p-progressSpinner styleClass="w-10 h-10" strokeWidth="7"
+                        animationDuration=".5s"></p-progressSpinner>
+                </div>
+            </ng-template>
+            <div class="text-center mt-2"><a routerLink="event" class="text-sm font-bold">Voir tous les événements</a>
+            </div>
+        </div>
+        <div class="md:w-1/3 px-4">
+            <app-login-form *ngIf="!isLoggedIn"></app-login-form>
+            <ul class="mt-6 list-none text-gray-700">
+                <li class="mb-2"><i class="pi pi-caret-right mr-1"></i> Chat en direct entre organisateurs et
+                    participants</li>
+                <li class="mb-2"><i class="pi pi-caret-right mr-1"></i> Évaluation des événements par les participants
+                </li>
+                <li class="mb-2"><i class="pi pi-caret-right mr-1"></i> Gestion et contrôle des inscriptions</li>
+                <li class="mb-2"><i class="pi pi-caret-right mr-1"></i> Système de billetterie intégré</li>
+            </ul>
+            <div class="card flex items-center mt-4 gap-2 flex-wrap" *ngIf="categories$ | async as categorie">
+                <div *ngFor="let _c of categorie" class="bg-slate-700 text-white rounded px-2 py-1 text-sm mr-2">
+                    {{ _c.name }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

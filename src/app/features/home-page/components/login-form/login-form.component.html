@@ -1,0 +1,50 @@
+<div class="bg-white p-6 rounded-lg shadow-lg">
+    <h5 class="text-xl font-semibold mb-4 text-center">C O N N E X I O N</h5>
+    <p-toast />
+    <form class="example-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <mat-form-field class="w-full">
+            <mat-label>E-mail</mat-label>
+            <input matInput type="email" formControlName="email" id="email" >
+            <mat-error *ngIf="email.errors">
+                <span *ngIf="email?.errors?.['required']">
+                    L'email est requis
+                </span>
+                <span *ngIf="email?.errors?.['email']">
+                    L'email n'est pas valide
+                </span>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-full">
+            <mat-label>Mot de passe</mat-label>
+            <input matInput type="password" formControlName="password" id="password" >
+            <mat-error *ngIf="password.errors">
+                <span *ngIf="password.errors?.['required']">
+                    Mot de passe requis
+                </span>
+                <span *ngIf="password.errors?.['minlength']">
+                    Mot de passe requis 6 characters min
+                </span>
+            </mat-error>
+        </mat-form-field>
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center">
+                <input type="checkbox" class="form-check-input mr-2" id="remember">
+                <label class="form-check-label" for="remember">Enregistrer mon mot de passe</label>
+            </div>
+            <a href="#" class="text-black font-semibold">Mot de passe oublié ?</a>
+        </div>
+        <button type="submit" class="w-full bg-yellow-500 text-white p-3 rounded-md font-bold">Connexion</button>
+        <div class="flex items-center mt-6">
+            <div class="flex-grow border-t border-gray-300"></div>
+            <span class="px-2">ou</span>
+            <div class="flex-grow border-t border-gray-300"></div>
+        </div>
+        <div class="text-center mt-3">
+            <img src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo" class="inline-block">
+        </div>
+        <div class="text-center mt-3">
+            <a class="text-gray-500 ">Pas encore de compte ? <span (click)="register()"
+                    class="text-amber-500 cursor-pointer">Créer</span></a>
+        </div>
+    </form>
+</div>

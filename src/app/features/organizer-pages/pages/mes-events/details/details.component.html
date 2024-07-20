@@ -1,0 +1,95 @@
+<div class="container mx-auto p-1">
+    <div class="card flex justify-center">
+        <p-carousel 
+            [value]="event?.images" 
+            [numVisible]="5" 
+            [numScroll]="1" 
+            orientation="horizontal" 
+            verticalViewPortHeight="360px"
+            class="rounded">
+            <ng-template let-image pTemplate="item">
+                <div class="rounded-lg m-2 p-3">
+                    <div class="mb-3">
+                        <div class="relative mx-auto">
+                            <p-image
+                                [src]="image" 
+                                width="250"
+                                class="w-full rounded" 
+                                [preview]="true"/>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-carousel>
+    </div>
+    
+    <div class="mb-2">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-sm"><i class="pi pi-calendar mr-2"></i>{{event?.date | date:'dd/MM/YYYY HH:mm'}}</p>
+                <p class="text-sm"><i class="pi pi-map-marker mr-2"></i>{{event?.location}}</p>
+                <h1 class="text-3xl font-bold mt-1">{{event?.title}}</h1>
+            </div>
+            <div>
+                <button class="bg-amber-400 text-white px-5 py-2 mt-2 rounded-lg">Modifier</button>
+            </div>
+        </div>
+        <div class="flex">
+            <div class="bg-white p-4 rounded-lg shadow-md flex items-center space-x-4 max-w-md mr-2">
+                <img [src]="event?.user?.imageUrl" alt="Avatar" class="w-12 h-12 rounded-full">
+                <div class="flex-grow">
+                    <p class="font-semibold">{{event?.user?.firstname +" "+ event?.user?.lastname}}</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-4 rounded shadow text-center">
+                <p class="font-bold text-gray-700">Solde de tickets</p>
+                <p class="text-3xl font-bold text-gray-900">{{event?.userEvents?.length}}/{{event?.place}}</p>
+            </div>
+        </div>        
+    </div>
+  
+   
+  
+    <div class="bg-white p-6 rounded shadow">
+        <p class="font-bold text-gray-700">Liste de participants</p>
+        <table class="w-full mt-4">
+            <thead>
+                <tr class="text-left text-gray-600">
+                    <th class="font-semibold">Nom complet</th>
+                    <th class="font-semibold">Adresse email</th>
+                    <th class="font-semibold">Téléphone</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let _p of participants">
+                    <td>{{_p?.firstname + " " + _p?.lastname}}</td>
+                    <td>{{_p?.email}}</td>
+                    <td>{{_p?.phone}}</td>
+                </tr>
+                <tr *ngIf="participants?.length===0">
+                    <td colspan="5" class="py-8 text-center text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m0 6l-6-6" />
+                        </svg>
+                        Pas de participants pour le moment.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a (click)="goback()" class="text-amber-400 mt-4 inline-block cursor-pointer">Liste des événements</a>
+    </div>
+    <div class="bg-white p-6 rounded shadow mt-3">
+        <p class="font-bold text-gray-700">Partage</p>
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-amber-400">https://www.terangaevent.sn/intelligence-artificielle</p>
+            </div>
+            <button class="text-amber-400">Copie le lien</button>
+        </div>
+    </div>
+  </div>
+  
+
+ 
+
